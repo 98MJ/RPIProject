@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 
 mylcd= LCD.lcd()
 
+
 def main():
     k= ""
     Maxduty= 10
