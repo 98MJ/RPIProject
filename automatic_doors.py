@@ -21,7 +21,7 @@ def main():
     seg= [29, 31, 32, 33, 35, 36, 37]
     GPIO.setup(seg, GPIO.OUT, initial=GPIO.LOW)
 
-    fnd = [(1,1,1,1,1,1,0), (0,1,1,0,0,0,0), (1,1,0,1,1,0,1), (1,1,1,1,0,0,1,)]                
+    fnd = [(0,1,1,0,0,0,0), (1,1,0,1,1,0,1), (1,1,1,1,0,0,1,)]                
 
     Servo.start(0)
     Servo.ChangeDutyCycle(duty)
@@ -30,8 +30,8 @@ def main():
     stopTime=0
     while True:
         GPIO.output(PinTrig, False)    
-        time.sleep(2)
-        mylcd.lcd_clear()
+        time.sleep(0.1)
+        
 
         print ('Calculating Distance. 1 nanosec pulse')
         GPIO.output(PinTrig, True)          
@@ -53,14 +53,21 @@ def main():
         if (Distance < 10):
             duty= 10
             Servo.ChangeDutyCycle(duty)
+            mylcd.lcd_clear()
+            mylcd.lcd_display_string(k, 1)
             mylcd.lcd_display_string("Open door", 2)
         else:
-            for i in range(3):
+            for i in reversed(range(3)):
                 GPIO.output(seg, fnd[i])
                 time.sleep(1)
             duty= 1
             Servo.ChangeDutyCycle(duty)
+            mylcd.lcd_clear()
+            mylcd.lcd_display_string(k, 1)
             mylcd.lcd_display_string("Close door", 2)
+            
+            
+                
             
             
             
